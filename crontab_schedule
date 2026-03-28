@@ -1,0 +1,3 @@
+# contab execution by user or other mean of schedule trigger by your own system. 
+# Exécution each  15 minutes, from 5h to 18h, in Décembre, Janvier, Février and Mars
+*/15 5-18 * 12,1,2,3 * /usr/bin/python3 /home/gimisa/check_hq.py >> /home/gimisa/logs/hq.log 2>&1
