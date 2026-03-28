@@ -1,0 +1,74 @@
+# 🧠 HA1 Automation: Routine A (Planning)
+
+This automation is the "Brain" of the energy management system. It listens for incremental changes from the MQTT sensors and schedules the physical power-off events.
+
+## ⚙️ Key Features
+* **Incremental Trigger:** Only activates if the new sensor value is greater than the previous one, preventing duplicate triggers.
+* **Dynamic Scheduling:** Uses Jinja2 templates to calculate the exact start time (06:00 or 16:00). If the alert is received after the hour, it automatically schedules for the following day.
+* **State Management:** It resets the `input_number` counters to `1` to signal an active peak and ensures the Execution Routine (Routine B) is enabled.
+
+## 📄 YAML Configuration
+
+```yaml
+alias: Chauffage HQ - Routine A (Cerveau)
+description: Planifie les arrêts de chauffage pour le matin et le soir.
+trigger:
+  - platform: state
+    entity_id:
+      - sensor.hq06_arret_chauffage_6h
+      - sensor.hq16_arret_chauffage_16h
+    not_to:
+      - unavailable
+      - unknown
+condition:
+  - condition: template
+    value_template: "{{ trigger.to_state.state | int(0) > trigger.from_state.state | int(0) }}"
+action:
+  - choose:
+      # SECTION: MATIN (06:00)
+      - conditions:
+          - "{{ trigger.entity_id == 'sensor.hq06_arret_chauffage_6h' }}"
+        sequence:
+          - service: input_number.set_value
+            target:
+              entity_id: input_number.hq_count_06_09
+            data:
+              value: 1
+          - service: input_datetime.set_datetime
+            target:
+              entity_id: input_datetime.hq_next_peak_start_0600
+            data:
+              datetime: >-
+                {{ now().replace(hour=6, minute=0, second=0, microsecond=0) +
+                timedelta(days=1 if now().hour >= 6 else 0) }}
+          - service: script.notification_generale
+            data:
+              message: "❄️ Alerte HQ06 reçue. Arrêt planifié demain 06:00."
+
+      # SECTION: SOIR (16:00)
+      - conditions:
+          - "{{ trigger.entity_id == 'sensor.hq16_arret_chauffage_16h' }}"
+        sequence:
+          - delay: "00:00:02"
+          - service: input_number.set_value
+            target:
+              entity_id: input_number.hq_count_16_20
+            data:
+              value: 1
+          - service: input_datetime.set_datetime
+            target:
+              entity_id: input_datetime.hq_next_peak_start_1600
+            data:
+              datetime: >-
+                {{ now().replace(hour=16, minute=0, second=0, microsecond=0) +
+                timedelta(days=1 if now().hour >= 16 else 0) }}
+          - service: script.notification_generale
+            data:
+              message: "🌙 Alerte HQ16 reçue. Arrêt planifié demain 16:00."
+
+  # Activation automatique de la Routine B (Exécution)
+  - service: automation.turn_on
+    target:
+      entity_id: automation.hq_routine_b_execution_et_auto_desactivation_v2
+mode: queued
+max: 10
