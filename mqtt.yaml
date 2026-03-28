@@ -1,0 +1,22 @@
+# mqtt sensors in mqtt.yaml or direcly in configuration.yaml for HA1
+
+
+sensor:
+- name: "HQ06 arret chauffage 6h"
+  unique_id: alerte_courriel_hq06
+  state_topic: courriel/hydroquebec/hq06_filesize # <--- LA CORRECTION CRITIQUE EST ICI
+  value_template: "{{ value | int(0) }}" 
+  unit_of_measurement: "B"
+  device_class: data_size   
+- name: "HQ16 arret chauffage 16h"
+  unique_id: alerte_courriel_hq16
+  state_topic: courriel/hydroquebec/hq16_filesize # <--- CORRECTION CRITIQUE
+  value_template: "{{ value | int(0) }}"
+  unit_of_measurement: "B"
+  device_class: data_size
+- name: "HQ26 arret chauffage 6h 16h"
+  unique_id: alerte_courriel_hq26
+  state_topic: courriel/hydroquebec/hq26_filesize # <--- CORRECTION CRITIQUE
+  value_template: "{{ value | int(0) }}"
+  unit_of_measurement: "B"
+  device_class: data_size
