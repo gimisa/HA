@@ -56,7 +56,7 @@ Beyond commercial hardware, I have engineered custom ESPHome solutions to monito
 
 * **Hydro-Québec Peak Management:** A custom Python/Bash hybrid system (`check_hq.py`) monitoring "Hi-lo" energy alerts. It automatically triggers heating load shedding for morning (06h), afternoon (16h), or dual-peak scenarios.
 
-* **Radar de Vision:** Specialized logic used for presence-based security states and automation efficiency.
+* **Radar:** Use in automation as presence detection in conjunction with esp32 indentity confirmation  security states and automation efficiency.
 
 * **Self-Healing Sensors:** Home Assistant sensors use MQTT "Retain" flags to ensure the real state is restored immediately following a system restart.
 
