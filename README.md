@@ -50,7 +50,7 @@ Beyond commercial hardware, I have engineered custom ESPHome solutions to monito
 * **Air Quality & Ventilation Control**
     * **Technology:** PM2.5 and CO2 sensing array.
     * **Function:** Monitors indoor air health and particulate concentration.
-    * **Integration:** Tied directly to the central ventilation system to automatically increase air exchange when thresholds (e.g., CO2 or smoke) are exceeded.
+    * **Integration:** Tied directly to the central ventilation system to automatically increase air exchange when thresholds ( smoke) are exceeded. Also use in case of fire alarm with central  heating system shut down. 
 
 ## ⚡ Key Automations & Logic
 
