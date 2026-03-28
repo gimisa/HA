@@ -54,7 +54,7 @@ Beyond commercial hardware, I have engineered custom ESPHome solutions to monito
 
 ## ⚡ Key Automations & Logic
 
-* **Hydro-Québec Peak Management:** A custom Python/Bash hybrid system (`check_hq.py`) monitoring "Hivelo" energy alerts. It automatically triggers heating load shedding for morning (06h), afternoon (16h), or dual-peak scenarios.
+* **Hydro-Québec Peak Management:** A custom Python/Bash hybrid system (`check_hq.py`) monitoring "Hi-lo" energy alerts. It automatically triggers heating load shedding for morning (06h), afternoon (16h), or dual-peak scenarios.
 
 * **Radar de Vision:** Specialized logic used for presence-based security states and automation efficiency.
 
