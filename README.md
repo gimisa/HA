@@ -70,4 +70,4 @@ Beyond commercial hardware, I have engineered custom ESPHome solutions to monito
 
 ---
 
-*Maintained by Gimisa — 2026*
+*Maintained by Gimisa — 2026  mailto: gimisa@yahoo.fr*
